@@ -9,6 +9,7 @@ Text-mode graphics card, using only TTL gates.
 - parallel interface; works with arduino or Z80
 - terrible idea anyway, use fpga instead
 - total IC count: 21
+- supports latin alphabet with polish letters, and Standard Galactic Alphabet
 
 Inspired by Ben Eater's "[World's worst video card](http:/https://eater.net/vga/ "World's worst video card")", I built myself something more.. worse? His video card was rather a digital frame, than a working video card. I fixed this - and I optimized the timer circuitry.
 
