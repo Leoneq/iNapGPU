@@ -22,7 +22,6 @@ Here is how the card looks:
 ![](https://github.com/Leoneq/iNapGPU/blob/main/images/dol.jpg?raw=true)
 I know it's terrible, and soldering many, MANY connections with .12mm wire is terrible too, but it's how I done it. When I was creating the schematic, I didn't know that it will work - this is why I soldered it on protoboard. I suggest you to ~~do it on fpga 'cause everyone's life will be easier then~~ create a normal PCB, DIY or bought.
 
-Now, go check the schematics in the /images/schematics directory. I know they're in Polish at the moment, but as soon as possible I'll translate them. 
 So - I'll skip the most obvious parts, and focus on the HSYNC timer.
 ![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/hc.png?raw=true)
 The pixel clock is 20MHz - two times more than Ben's card. Instead of using 3 4bit counters, I used one, 12bit counter. The thing is, it's rated for 12MHz max. at 15V! This is why I DON'T GUARANTEE this will work for you; you should use those 4bit counters. (tip: for me only SMD versions of CD4040 worked) Next, the numbers from counter are going to NAND gates. There are two things with it - I'm comparing only "ones"of numbers, but Ben is comparing the entire number. The thing is, when I'm not comparing "zeros", the number will be "shown" multiple times, what luckily won't affect us. Since the RS flip-flop is activated once, activating it more times won't do anything. Same for resetting it. The signal from last pixel (528) is connected via NOT gate, as reset and clock are high active signals.
