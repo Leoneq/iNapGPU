@@ -10,7 +10,7 @@ Text-mode graphics card, using only TTL gates.
 - terrible idea anyway, use fpga instead
 - total IC count: 21
 
-Inspired by Ben Eater's "World's worst video card", I built myself something more.. worse? His video card was rather a digital frame, than a working video card. I fixed this - and I optimized the timer circuitry.
+Inspired by Ben Eater's "[World's worst video card](http:/https://eater.net/vga/ "World's worst video card")", I built myself something more.. worse? His video card was rather a digital frame, than a working video card. I fixed this - and I optimized the timer circuitry.
 
 (anyway, i have to tell you that my english is not best, but i try)
 
@@ -34,6 +34,13 @@ Also, you can select the actual color of the font.
 As being said, the first 8 bits are connected to the SRAM. I used 2kB HM6116 IC, as I don't need more (there's only 900 chars to store). The tricky thing is connecting the entire card with the environment. I used tri-state logic buffers, 74LS245 and 74LS244 as most optimal choice. They're separating timers from the SRAM while writing, and separating data and address bus while timers are reading from SRAM. Also, I did there a small mistake, and connected '245 between SRAM and EPROM. The best solution here should be a latch, as it will store actual character for a moment, not clear the entire bus. This should work better than '245, but I don't have '373 at this moment.
 
 And this is it! An actual video card from TTL gates, as I said. I'm giving to you tools to convert an image into a charset, and code I used for testing with Arduino.  On [this repository](http://https://github.com/Leoneq/eprom_programmer "this repository") is also code for my DIY eprom programmer. I hope you won't do this, really, this is huge waste of time (but I can say "I built a graphics card without any microcontroller!" at least ;d )
+
+Known anomalies:
+- the image is slightly glitching while writing. This happpens beacuse I can't write and read at same time, so I have to live with it.
+- the card is very sensitive to environment noise. The image can distort when there's an USB cable nearby, or oscilloscope cable.
+- the characters are not clear. This happens because of the ROM, in many ways, such as power supply, read access time etc.
+- there are strange lines in the background, at least in mine card. I have no idea what are these, and as soon as I get new oscilloscope, I'll try to erase them (literally)
+- the image is ugly. Really, what were you expecting from second world's worst video card?
 
 ![](https://github.com/Leoneq/iNapGPU/blob/main/images/gpuqa.png?raw=true)
 ![](https://github.com/Leoneq/iNapGPU/blob/main/images/przyklad.jpg?raw=true)
