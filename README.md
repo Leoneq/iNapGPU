@@ -1,4 +1,4 @@
-# iNapGPU
+# iNapGPU 🖥
 Text-mode graphics card, using only TTL gates.
 ![](https://github.com/Leoneq/iNapGPU/blob/main/images/charset.jpg?raw=true)
 #### Specs
