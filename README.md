@@ -24,11 +24,11 @@ I know it's terrible, and soldering many, MANY connections with .12mm wire is te
 
 Now, go check the schematics in the /images/schematics directory. I know they're in Polish at the moment, but as soon as possible I'll translate them. 
 So - I'll skip the most obvious parts, and focus on the HSYNC timer.
-![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/zegar,%20licznik%20poziomy.png?raw=true)
+![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/hc.png?raw=true)
 The pixel clock is 20MHz - two times more than Ben's card. Instead of using 3 4bit counters, I used one, 12bit counter. The thing is, it's rated for 12MHz max. at 15V! This is why I DON'T GUARANTEE this will work for you; you should use those 4bit counters. (tip: for me only SMD versions of CD4040 worked) Next, the numbers from counter are going to NAND gates. There are two things with it - I'm comparing only "ones"of numbers, but Ben is comparing the entire number. The thing is, when I'm not comparing "zeros", the number will be "shown" multiple times, what luckily won't affect us. Since the RS flip-flop is activated once, activating it more times won't do anything. Same for resetting it. The signal from last pixel (528) is connected via NOT gate, as reset and clock are high active signals.
-![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/licznik%20pionowy.png?raw=true)
+![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/vc.png?raw=true)
 With the vertical timer the thing is same: normal CD4040 counter, with NAND gates and two RS flip-flops. And at this stage, I did a small mistake, just as Ben did: the timers are counting from 0. Thus, when the total amount of pixels in a row WILL be 528px, the first pixel is 0, and the last is 527. At least let's say it's not that important, as everything is working just fine. Another thing is, that the timer IS running at 37.(87)kHz, and physically we could achieve resolution 400x600 - but this is really bad idea. This is why the first bit of the counter is not used.
-![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/ROM,%20RAM.png?raw=true)
+![](https://github.com/Leoneq/iNapGPU/blob/main/images/schematics/mem.png?raw=true)
 The heart of my GPU is in the last sheet. I've successfully connected RAM and ROM to timers, that generate actual image. I used M27C1001 with read time up to 100ns, and as far as I checked - version 45ns doesn't really change anything. The IC is UV EPROM with capacity of 1Mbit. Sadly, this decreases to "only" 128kbit, as I'm using the memory as 1bit memory. At least, it was enough for 4 charsets with 255 chars each.
 The first 8 bits of address is a character from SRAM. The next four bits are rows, next three bits are columns, and last two bits are for chosing the codepage. 
 Also, you can select the actual color of the font.
